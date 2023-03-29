@@ -21,16 +21,16 @@
     - add `npm run lint`
     - add `npm run format`
 
-Q: ctrl+s保存 code 时，无法自动进行格式化
+Q: ctrl+s 保存 code 时，无法自动进行格式化
 
 - style - sass
+
   - [stylelint setting](https://juejin.cn/post/7118294114734440455)
 
 - husky
   - `npm i husky -D`
   - add a new script in package.json: `"prepare": "husky install"`
   - execute: `npx husky add .husky/pre-commit "npm run lint && npm run format"`
-
 
 ## 0.0.0
 
@@ -60,8 +60,8 @@ Q: ctrl+s保存 code 时，无法自动进行格式化
     	//...
     	resolve: {
     		alias: {
-    			'/@': pathResolve('./src/'),
-    		},
-    	},
-    });
+    			'/@': pathResolve('./src/')
+    		}
+    	}
+    })
     ```

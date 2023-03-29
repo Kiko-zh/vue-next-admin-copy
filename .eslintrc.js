@@ -3,20 +3,20 @@ module.exports = {
 	env: {
 		browser: true,
 		es2021: true,
-		node: true,
+		node: true
 	},
 	parser: 'vue-eslint-parser',
 	parserOptions: {
 		ecmaVersion: 'latest', // 2022 -> 13
 		parser: '@typescript-eslint/parser',
-		sourceType: 'module',
+		sourceType: 'module'
 	},
 	extends: [
 		'eslint:recommended',
 		'plugin:vue/vue3-essential',
 		'plugin:@typescript-eslint/recommended',
 		'@vue/prettier',
-		'@vue/eslint-config-typescript',
+		'@vue/eslint-config-typescript'
 	],
 	plugins: ['vue', '@typescript-eslint', 'prettier'],
 	rules: {
@@ -69,6 +69,6 @@ module.exports = {
 		'no-v-model-argument': 'off',
 		'no-case-declarations': 'off',
 		'no-console': 'error',
-		'no-redeclare': 'off',
-	},
-};
+		'no-redeclare': 'off'
+	}
+}
