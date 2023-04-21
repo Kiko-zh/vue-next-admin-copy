@@ -12,13 +12,21 @@ module.exports = {
 		sourceType: 'module'
 	},
 	extends: [
-		'eslint:recommended',
 		'plugin:vue/vue3-essential',
 		'plugin:@typescript-eslint/recommended',
 		'@vue/prettier',
-		'@vue/eslint-config-typescript'
+		// '@vue/eslint-config-typescript',
+		'eslint:recommended'
 	],
 	plugins: ['vue', '@typescript-eslint', 'prettier'],
+	overrides: [
+		{
+			files: ['*.ts', '*.tsx', '*.vue'],
+			rules: {
+				'no-undef': 'off'
+			}
+		}
+	],
 	rules: {
 		// http://eslint.cn/docs/rules/
 		// https://eslint.vuejs.org/rules/
