@@ -18,11 +18,11 @@
 				<div class="login-right-wrap-one"></div>
 				<div class="login-right-wrap-two"></div>
 				<div class="login-right-wrap-main">
-					<div class="login-right-wrap-main-title">{{ getThemeConfig.globalTitle }}</div>
+					<div class="login-right-wrap-main-title">{{ getThemeConfig.globalTitle }} 欢迎您！</div>
 					<div class="login-right-wrap-main-form">
 						<div v-if="!state.isScan">
 							<el-tabs v-model="state.tabsActiveName">
-								<el-tab-pane :label="$t('message.label.one1')">
+								<el-tab-pane :label="$t('message.label.one1')" name="account">
 									<Account />
 								</el-tab-pane>
 								<el-tab-pane :label="$t('message.label.two2')" name="mobile">
@@ -204,7 +204,7 @@ onMounted(() => {
 					font-size: 27px;
 					text-align: center;
 					letter-spacing: 3px;
-					animation: logoAnimation 0.3 ease;
+					animation: logoAnimation 0.3s ease;
 					animation-delay: 0.3s;
 					color: var(--el-text-color-primary);
 				}
