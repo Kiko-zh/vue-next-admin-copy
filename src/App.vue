@@ -6,11 +6,12 @@
 </template>
 
 <script setup lang="ts" name="app">
-import { defineAsyncComponent, computed } from 'vue'
+import { defineAsyncComponent, computed, onBeforeMount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { storeToRefs } from 'pinia'
 import { useThemeConfig } from '/@/stores/themeConfig'
 import other from '/@/utils/other'
+import setIntroduction from '/@/utils/setIconfont'
 
 // 引入组件
 const LockScreen = defineAsyncComponent(() => import('/@/layout/lockScreen/index.vue'))
@@ -33,5 +34,12 @@ const getGlobalComponentSize = computed(() => {
 // 获取全局 i18n
 const getGlobalI18n = computed(() => {
 	return messages.value[locale.value]
+})
+// 设置初始化，防止刷新时恢复默认
+onBeforeMount(() => {
+	// 设置批量第三方 icon 图标
+	setIntroduction.cssCdn()
+	// 设置批量第三方 js
+	setIntroduction.jsCdn()
 })
 </script>

@@ -13,7 +13,7 @@ export function wavesDirective(app: App) {
 			function setConvertStyle(obj: { [key: string]: unknown }) {
 				let style = ''
 				for (const i in obj) {
-					if (obj.hasOwnProperty(i)) style += `${i}: ${obj[i]}`
+					if (obj.hasOwnProperty(i)) style += `${i}:${obj[i]};`
 				}
 				return style
 			}

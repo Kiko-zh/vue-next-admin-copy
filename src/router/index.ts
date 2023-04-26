@@ -106,26 +106,53 @@ export function formatFlatteningRoutes(arr: any) {
  * @param arr 处理后的一维路由菜单数组
  * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
  */
+// export function formatTwoStageRoutes(arr: any) {
+// 	if (arr.length <= 0) return false
+
+// 	const newArr: any[] = []
+// 	const cacheList: string[] = []
+
+// 	arr.forEach((v: any) => {
+// 		if (v.path === '/') {
+// 			newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] })
+// 		} else {
+// 			// 判断是否是 动态路由（xx/:id/:name），用于 tagsView 等中使用
+// 			if (v.path.indexOf('/:') > -1) {
+// 				v.meta['isDynamic'] = true
+// 				v.meta['isDynamicPath'] = v.path
+// 			}
+
+// 			newArr[0].children.push({ ...v })
+
+// 			// 存 name 值，keep-alive 中 include 使用，实现路由的缓存
+// 			// 路径 /@/layout/routerView/parent.vue
+// 			if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
+// 				cacheList.push(v.name)
+// 				const stores = useKeepAliveNames(pinia)
+// 				stores.setCacheKeepAlive(cacheList)
+// 			}
+// 		}
+// 	})
+
+// 	return newArr
+// }
 export function formatTwoStageRoutes(arr: any) {
 	if (arr.length <= 0) return false
-
-	const newArr: any[] = []
-	const cacheList: string[] = []
-
+	const newArr: any = []
+	const cacheList: Array<string> = []
 	arr.forEach((v: any) => {
 		if (v.path === '/') {
 			newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] })
 		} else {
-			// 判断是否是 动态路由（xx/:id/:name），用于 tagsView 等中使用
+			// 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
+			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
 			if (v.path.indexOf('/:') > -1) {
 				v.meta['isDynamic'] = true
 				v.meta['isDynamicPath'] = v.path
 			}
-
 			newArr[0].children.push({ ...v })
-
 			// 存 name 值，keep-alive 中 include 使用，实现路由的缓存
-			// 路径 /@/layout/routerView/parent.vue
+			// 路径：/@/layout/routerView/parent.vue
 			if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
 				cacheList.push(v.name)
 				const stores = useKeepAliveNames(pinia)
@@ -133,7 +160,6 @@ export function formatTwoStageRoutes(arr: any) {
 			}
 		}
 	})
-
 	return newArr
 }
 

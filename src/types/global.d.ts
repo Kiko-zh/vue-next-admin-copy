@@ -2,6 +2,7 @@
 
 declare module 'js-cookie'
 declare module 'qs'
+declare module 'qrcodejs2-fixes'
 
 // 声明文件，定义全局变量
 /* eslint-disable */

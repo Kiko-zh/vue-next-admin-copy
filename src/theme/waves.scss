@@ -6,20 +6,20 @@
 * https://github.com/fians/Waves/blob/master/LICENSE
 */
 .waves-effect {
-  position: relative;
-  cursor: pointer;
-  display: inline-block;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  -webkit-tap-highlight-color: transparent;
-  vertical-align: middle;
-  z-index: 1;
-  will-change: opacity, transform;
-  transition: all 0.3s ease-out;
+	position: relative;
+	cursor: pointer;
+	display: inline-block;
+	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	vertical-align: middle;
+	z-index: 1;
+	will-change: opacity, transform;
+	transition: all 0.3s ease-out;
 }
-
 .waves-effect .waves-ripple {
 	position: absolute;
 	border-radius: 50%;
@@ -92,7 +92,6 @@
 	line-height: 2.5em;
 	border-radius: 50%;
 	-webkit-mask-image: none;
-  mask-image: none;
 }
 .waves-block {
 	display: block;
