@@ -16,6 +16,7 @@
 		"echarts": "^5.4.2",
 		"element-plus": "^2.3.0",
 		"js-cookie": "^3.0.1",
+		"mitt": "^3.0.0",
 		"nprogress": "^0.2.0",
 		"pinia": "^2.0.33",
 		"qrcodejs2-fixes": "^0.0.2",

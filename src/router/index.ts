@@ -41,7 +41,7 @@ export const router = createRouter({
 	routes: [...notFoundAndNoPower, ...staticRoutes]
 })
 
-//* 路由加载前
+// 路由加载前
 router.beforeEach(async (to, from, next) => {
 	NProgress.configure({ showSpinner: false })
 	if (to.meta.title) NProgress.start()
@@ -62,12 +62,13 @@ router.beforeEach(async (to, from, next) => {
 			const { routesList } = storeToRefs(storesRoutesList)
 			if (routesList.value.length === 0) {
 				if (isRequestRoutes) {
-					// 后端控制路由： 路由数据初始化，防止刷新时丢失
+					// 后端控制路由：路由数据初始化，防止刷新时丢失
 					await initBackEndControlRoutes()
 					// 解决刷新时，一直跳 404 页面问题，关联问题 No match found for location with path 'xxx'
-					// to.query 防止页面刷新时，普通路由带参数时，参数丢失。动态路由（xxx/:id/:name）isDynamic 无须处理
+					// to.query 防止页面刷新时，普通路由带参数时，参数丢失。动态路由（xxx/:id/:name"）isDynamic 无需处理
 					next({ path: to.path, query: to.query })
 				} else {
+					// https://gitee.com/lyt-top/vue-next-admin/issues/I5F1HP
 					await initFrontEndControlRoutes()
 					next({ path: to.path, query: to.query })
 				}
@@ -77,6 +78,7 @@ router.beforeEach(async (to, from, next) => {
 		}
 	}
 })
+
 //* 路由加载后
 router.afterEach(() => {
 	NProgress.done()
@@ -106,60 +108,32 @@ export function formatFlatteningRoutes(arr: any) {
  * @param arr 处理后的一维路由菜单数组
  * @returns 返回将一维数组重新处理成 `定义动态路由（dynamicRoutes）` 的格式
  */
-// export function formatTwoStageRoutes(arr: any) {
-// 	if (arr.length <= 0) return false
-
-// 	const newArr: any[] = []
-// 	const cacheList: string[] = []
-
-// 	arr.forEach((v: any) => {
-// 		if (v.path === '/') {
-// 			newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] })
-// 		} else {
-// 			// 判断是否是 动态路由（xx/:id/:name），用于 tagsView 等中使用
-// 			if (v.path.indexOf('/:') > -1) {
-// 				v.meta['isDynamic'] = true
-// 				v.meta['isDynamicPath'] = v.path
-// 			}
-
-// 			newArr[0].children.push({ ...v })
-
-// 			// 存 name 值，keep-alive 中 include 使用，实现路由的缓存
-// 			// 路径 /@/layout/routerView/parent.vue
-// 			if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
-// 				cacheList.push(v.name)
-// 				const stores = useKeepAliveNames(pinia)
-// 				stores.setCacheKeepAlive(cacheList)
-// 			}
-// 		}
-// 	})
-
-// 	return newArr
-// }
 export function formatTwoStageRoutes(arr: any) {
 	if (arr.length <= 0) return false
 	const newArr: any = []
 	const cacheList: Array<string> = []
-	arr.forEach((v: any) => {
-		if (v.path === '/') {
-			newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] })
-		} else {
-			// 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
-			// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
-			if (v.path.indexOf('/:') > -1) {
-				v.meta['isDynamic'] = true
-				v.meta['isDynamicPath'] = v.path
+	if (Array.isArray(arr)) {
+		arr.forEach((v: any) => {
+			if (v.path === '/') {
+				newArr.push({ component: v.component, name: v.name, path: v.path, redirect: v.redirect, meta: v.meta, children: [] })
+			} else {
+				// 判断是否是动态路由（xx/:id/:name），用于 tagsView 等中使用
+				// 修复：https://gitee.com/lyt-top/vue-next-admin/issues/I3YX6G
+				if (v.path.indexOf('/:') > -1) {
+					v.meta['isDynamic'] = true
+					v.meta['isDynamicPath'] = v.path
+				}
+				newArr[0].children.push({ ...v })
+				// 存 name 值，keep-alive 中 include 使用，实现路由的缓存
+				// 路径：/@/layout/routerView/parent.vue
+				if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
+					cacheList.push(v.name)
+					const stores = useKeepAliveNames(pinia)
+					stores.setCacheKeepAlive(cacheList)
+				}
 			}
-			newArr[0].children.push({ ...v })
-			// 存 name 值，keep-alive 中 include 使用，实现路由的缓存
-			// 路径：/@/layout/routerView/parent.vue
-			if (newArr[0].meta.isKeepAlive && v.meta.isKeepAlive) {
-				cacheList.push(v.name)
-				const stores = useKeepAliveNames(pinia)
-				stores.setCacheKeepAlive(cacheList)
-			}
-		}
-	})
+		})
+	}
 	return newArr
 }
 

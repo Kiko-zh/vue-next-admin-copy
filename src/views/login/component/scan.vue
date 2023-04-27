@@ -19,7 +19,7 @@ const qrcodeRef = ref<HTMLElement | null>(null)
 const initQrCode = () => {
 	nextTick(() => {
 		//eslint-disable-next-line
-		(<HTMLElement>qrcodeRef.value).innerHTML = ''
+		;(<HTMLElement>qrcodeRef.value).innerHTML = ''
 		new QRCode(qrcodeRef.value, {
 			text: `https://qm.qq.com/cgi-bin/qm/qr?k=RdUY97Vx0T0vZ_1OOu-X1yFNkWgDwbjC&jump_from=webapi`,
 			width: 260,

@@ -37,7 +37,13 @@ declare module 'vue-router' {
  * @description 名字段请查看 `/@/views/system/menu/component/addMenu.vue 下的 ruleForm`
  * @returns 返回路由菜单数据
  */
-export const dynamicRoutes: Array<RouteRecordRaw> = []
+export const dynamicRoutes: Array<RouteRecordRaw> = [
+	{
+		path: '/',
+		name: '/',
+		component: () => import('/@/layout/index.vue')
+	}
+]
 
 /**
  * 定义 404、401界面
